@@ -1,0 +1,12 @@
+[submodule "auth-service"]
+	path = auth-service
+	url = https://github.com/Krishnadaskrish/auth-service.git
+[submodule "user-service"]
+	path = user-service
+	url = https://github.com/Krishnadaskrish/user-service.git
+[submodule "gateway"]
+	path = gateway
+	url = https://github.com/Krishnadaskrish/gateway.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/Krishnadaskrish/frontend.git

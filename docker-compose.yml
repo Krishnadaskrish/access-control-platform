@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - JWT_SECRET=grader-secret-token-key-999
+    volumes:
+      - auth-data:/app/data
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+      - JWT_SECRET=grader-secret-token-key-999
+      - AUTH_SERVICE_URL=http://auth-service:5001
+    volumes:
+      - user-data:/app/data
+    depends_on:
+      - auth-service
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - USER_SERVICE_URL=http://user-service:5002
+    depends_on:
+      - auth-service
+      - user-service
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_PORT=3000
+    depends_on:
+      - gateway
+
+volumes:
+  auth-data:
+  user-data:
