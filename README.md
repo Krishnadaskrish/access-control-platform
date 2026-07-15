@@ -14,7 +14,7 @@ The application is split into four decoupled services, adhering to the **Databas
 4. **Vite React Frontend (Port 3001)**: Responsive SPA styled with TailwindCSS, containing dashboard views, route guards, and permission-based rendering.
 
 ```
-React Client (3001) ──> API Gateway (5000)
+React Client (3000) ──> API Gateway (5000)
                             ├──> Auth Service (5001) ──> auth.db
                             └──> User & RBAC Service (5002) ──> user_rbac.db
 ```
@@ -66,7 +66,7 @@ Ensure you have **Node.js (v18+)** installed. In the `rbac-system/` root directo
 ## 🔑 Default Credentials
 
 The databases automatically seed a default administrator account on first startup:
-* **Email**: `admin@rbac.com`
+* **Email**: `admin@gmail.com`
 * **Password**: `admin123`
 
 ---
@@ -77,8 +77,8 @@ All routes route through the **API Gateway** on Port `5000`.
 
 ### 1. Authentication Service (`/api/auth`)
 * **`POST /api/auth/login`**: Authenticates credentials and returns a JWT token.
-  * *Request Body*: `{ "email": "admin@rbac.com", "password": "admin123" }`
-  * *Response*: `{ "token": "JWT_TOKEN", "user": { "id": 1, "email": "admin@rbac.com" } }`
+  * *Request Body*: `{ "email": "admin@gmail.com", "password": "admin123" }`
+  * *Response*: `{ "token": "JWT_TOKEN", "user": { "id": 1, "email": "admin@gmail.com" } }`
 
 ### 2. User & RBAC Service (`/api/users`, `/api/roles` & `/api/permissions`)
 *All routes below require authentication by passing `Authorization: Bearer <JWT_TOKEN>`.*
@@ -86,7 +86,7 @@ All routes route through the **API Gateway** on Port `5000`.
 * **`GET /api/users/me/permissions`**: Retrieves the active profile, role name, and authorized permissions.
 * **`GET /api/users`**: List user profiles (Supports query pagination: `GET /api/users?page=1&limit=5`).
 * **`POST /api/users`**: Creates a user profile and registers credentials in the Auth Service (Requires `users:create` permission).
-  * *Request Body*: `{ "first_name": "John", "last_name": "Doe", "email": "john@rbac.com", "password": "password123", "role": "User" }`
+  * *Request Body*: `{ "first_name": "Krishnadas", "last_name": "B", "email": "[EMAIL_ADDRESS]", "password": "password123", "role": "User" }`
 * **`DELETE /api/users/:id`**: Removes user profile and credentials in the Auth Service (Requires `users:delete` permission).
 * **`GET /api/roles`**: List roles and their permission mappings (Requires `roles:read` permission).
 * **`POST /api/roles/assign`**: Re-assigns a user to a different role (Requires `roles:assign` permission).
